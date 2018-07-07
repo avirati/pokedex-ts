@@ -1,28 +1,64 @@
-.App {
-  text-align: center;
+.disabled,
+.exhausted,
+.incapable {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.center {
+  display: block;
+  margin: 0 auto;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.margin-bottom--0 {
+  margin-bottom: 0px;
 }
 
-.App-title {
-  font-size: 1.5em;
+.heart {
+  position: relative;
+  width: 60px;
+  height: 50px;
+  float: left;
 }
 
-.App-intro {
-  font-size: large;
+.heart:before,
+.heart:after {
+  position: absolute;
+  content: "";
+  left: 30px;
+  top: 0;
+  width: 30px;
+  height: 50px;
+  background: #cccccc;
+  -moz-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  transform-origin: 0 100%;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.heart:after {
+  left: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform-origin: 100% 100%;
+  -moz-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  -o-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+
+.heart.active:before,
+.heart.active:after {
+  background: #fc2e5a;
 }

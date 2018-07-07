@@ -1,0 +1,13 @@
+h1.logo-wrapper {
+  margin: 0px 0px;
+}
+
+header#header {
+  z-index: 10;
+}
+
+header .brand-logo {
+  margin: 1px 0px;
+  padding: 0 20px;
+  line-height: 60px;
+}
