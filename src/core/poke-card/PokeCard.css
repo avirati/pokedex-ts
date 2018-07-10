@@ -1,0 +1,105 @@
+/* line 1, ../../app/styles/poke-card.scss */
+.poke-card {
+  padding-top: 20px;
+}
+/* line 3, ../../app/styles/poke-card.scss */
+.poke-card .pokeball {
+  background-image: url("../../images/pokeball.png");
+  width: 100%;
+  height: 300px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+/* line 12, ../../app/styles/poke-card.scss */
+.poke-card .name {
+  text-transform: capitalize;
+  font-size: 16px;
+  text-align: center;
+}
+
+/* line 19, ../../app/styles/poke-card.scss */
+.research-card {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  box-shadow: 1px 5px 10px #ccc;
+  padding: 20px 5px !important;
+  position: relative;
+}
+/* line 27, ../../app/styles/poke-card.scss */
+.research-card img {
+  width: 100%;
+  border: 1px solid #eee;
+}
+/* line 32, ../../app/styles/poke-card.scss */
+.research-card label {
+  font-size: 14px;
+  font-family: arial;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+/* line 39, ../../app/styles/poke-card.scss */
+.research-card span {
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin-left: 10px;
+}
+/* line 46, ../../app/styles/poke-card.scss */
+.research-card .heart {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+/* line 52, ../../app/styles/poke-card.scss */
+.research-card .moves-list {
+  width: 50vw;
+  height: 150px;
+  overflow: auto;
+  border: 1px solid #eee;
+  padding: 10px;
+  margin-top: 9px;
+}
+/* line 60, ../../app/styles/poke-card.scss */
+.research-card .moves-list .pill {
+  text-transform: uppercase;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 5px;
+  box-shadow: 1px 1px 10px #eee;
+  font-size: 12px;
+  color: #777;
+  letter-spacing: 3px;
+  display: inline-block;
+}
+
+@media only screen and (max-width: 640px) {
+  /* line 78, ../../app/styles/poke-card.scss */
+  .only-desktop {
+    display: none;
+  }
+}
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1224px) {
+  /* Styles */
+  /* line 86, ../../app/styles/poke-card.scss */
+  .image-container {
+    display: inline-block;
+    vertical-align: top;
+    width: 400px;
+  }
+
+  /* line 92, ../../app/styles/poke-card.scss */
+  .description-container {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+/*# sourceMappingURL=poke-card.css.map */
