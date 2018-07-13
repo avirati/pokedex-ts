@@ -5,8 +5,8 @@ import { IPokeListProps, IPokeListState } from '../Interfaces';
 
 export default class PokeListComponent extends React.Component <IPokeListProps, IPokeListState> {
   public render() {
-    const { pokemonList } = this.props;
-    return pokemonList.map((pokemon, index) => {
+    const { pokeList } = this.props;
+    return pokeList.map((pokemon, index) => {
       return <PokeCardComponent pokemonData={pokemon} key={index}/>;
     });
   }

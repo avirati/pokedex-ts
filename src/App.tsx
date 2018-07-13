@@ -1,23 +1,42 @@
-import * as React from 'react';
 import '../node_modules/materialize-css/dist/css/materialize.css';
 import './App.css';
 
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { AnyAction, Dispatch } from 'redux';
+
 import { FooterComponent, HeaderComponent } from './core/Components';
-import { IPokemon } from './core/Interfaces';
+import { IAppState, IPokeListProps, IPokeListState } from './core/Interfaces';
 import PokeListComponent from './core/poke-list';
 
-const db: IPokemon[] = require('./dump.json');
-
-class App extends React.Component {
+class App extends React.Component <IPokeListProps, IPokeListState> {
   public render() {
     return (
       <div className='container-fluid pokedex-app'>
         <HeaderComponent />
-        <PokeListComponent pokemonList={db}/>
+        <PokeListComponent pokeList={this.props.pokeList}/>
         <FooterComponent />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state: IAppState) => {
+  return {
+    pokeList: state.pokeList,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
+  return {
+    destroyTodo: () =>
+      dispatch({
+        type: 'DESTROY_TODO',
+      }),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);

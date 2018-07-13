@@ -5,7 +5,7 @@ export interface IPokeListState {
 }
 
 export interface IPokeListProps {
-  pokemonList: IPokemon[];
+  pokeList: IPokemon[];
 }
 
 export interface IPokeCardProps {
