@@ -6,10 +6,18 @@ import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 
 import { FooterComponent, HeaderComponent } from './core/Components';
-import { IAppState, IPokeListProps, IPokeListState } from './core/Interfaces';
+import { IAppState, IPokemon } from './core/Interfaces';
 import PokeListComponent from './core/poke-list';
 
-class App extends React.Component <IPokeListProps, IPokeListState> {
+interface IProps {
+  pokeList: IPokemon[];
+}
+
+interface IState {
+
+}
+
+class App extends React.Component <IProps, IState> {
   public render() {
     return (
       <div className='container-fluid pokedex-app'>
@@ -28,12 +36,7 @@ const mapStateToProps = (state: IAppState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-  return {
-    destroyTodo: () =>
-      dispatch({
-        type: 'DESTROY_TODO',
-      }),
-  };
+  return {};
 };
 
 export default connect(
