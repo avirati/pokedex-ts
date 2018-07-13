@@ -1,3 +1,5 @@
+import { Action } from 'redux';
+
 export interface IPokeListState {
 
 }
@@ -39,4 +41,12 @@ export interface IPokemon {
   url: string;
   name: string;
   researchData?: IPokemonResearchData;
+}
+
+export interface IAppState {
+  pokeList: IPokemon[];
+}
+
+export interface ICustomAction extends Action {
+
 }

@@ -84,7 +84,7 @@ export default class PokeCardComponent extends React.Component <IPokeCardProps> 
     } else {
       return (
         <div className='row poke-card'>
-          <div className='col s12 m3' ng-if='!pokemon.researchData'>
+          <div className='col s12 m3'>
             <div className='row'>
               <div className='col s12'>
                 <div
