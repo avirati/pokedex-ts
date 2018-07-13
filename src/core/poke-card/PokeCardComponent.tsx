@@ -1,21 +1,30 @@
 import './PokeCard.css';
 
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { AnyAction, Dispatch } from 'redux';
 
 import { IPokemon } from '../Interfaces';
+import * as Types from '../types';
 
 interface IProps {
   pokemonData: IPokemon;
+  onFetchMoreDetails?: (id: number) => void;
+}
+
+interface IMapperProps {
+  onFetchMoreDetails?: (id: number) => void;
 }
 
 interface IState {
 
 }
 
-export default class PokeCardComponent extends React.Component <IProps, IState> {
+class PokeCardComponent extends React.Component <IProps, IState> {
   public render() {
-    const { pokemonData } = this.props;
+    const { pokemonData, onFetchMoreDetails = (id: number) => console.log(id) } = this.props;
     const pData = pokemonData.researchData;
+
     if (pData) {
       return (
         <div className='row poke-card'>
@@ -91,7 +100,7 @@ export default class PokeCardComponent extends React.Component <IProps, IState> 
       );
     } else {
       return (
-        <div className='row poke-card'>
+        <div className='row poke-card' onClick={(e) => onFetchMoreDetails(pokemonData.id)}>
           <div className='col s12 m3'>
             <div className='row'>
               <div className='col s12'>
@@ -109,3 +118,23 @@ export default class PokeCardComponent extends React.Component <IProps, IState> 
     }
   }
 }
+
+const mapStateToProps = (state: IState): IState => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IMapperProps => {
+  return {
+    onFetchMoreDetails: (id: number) => {
+      dispatch({
+        pokemonId: id,
+        type: Types.FETCH_MORE_DETAILS,
+      });
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PokeCardComponent);
