@@ -1,17 +1,5 @@
 import { Action } from 'redux';
 
-export interface IPokeListState {
-
-}
-
-export interface IPokeListProps {
-  pokeList: IPokemon[];
-}
-
-export interface IPokeCardProps {
-  pokemonData: IPokemon;
-}
-
 interface IPokemonMoves {
   move: {
     name: string;

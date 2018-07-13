@@ -1,10 +1,18 @@
-import * as React from 'react';
-
-import { IPokeCardProps } from '../Interfaces';
-
 import './PokeCard.css';
 
-export default class PokeCardComponent extends React.Component <IPokeCardProps> {
+import * as React from 'react';
+
+import { IPokemon } from '../Interfaces';
+
+interface IProps {
+  pokemonData: IPokemon;
+}
+
+interface IState {
+
+}
+
+export default class PokeCardComponent extends React.Component <IProps, IState> {
   public render() {
     const { pokemonData } = this.props;
     const pData = pokemonData.researchData;

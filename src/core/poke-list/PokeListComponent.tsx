@@ -1,9 +1,17 @@
 import * as React from 'react';
 import PokeCardComponent from '../poke-card';
 
-import { IPokeListProps, IPokeListState } from '../Interfaces';
+import { IPokemon } from '../Interfaces';
 
-export default class PokeListComponent extends React.Component <IPokeListProps, IPokeListState> {
+interface IProps {
+  pokeList: IPokemon[];
+}
+
+interface IState {
+
+}
+
+class PokeListComponent extends React.Component <IProps, IState> {
   public render() {
     const { pokeList } = this.props;
     return pokeList.map((pokemon, index) => {
@@ -11,3 +19,5 @@ export default class PokeListComponent extends React.Component <IPokeListProps, 
     });
   }
 }
+
+export default PokeListComponent;
