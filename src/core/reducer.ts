@@ -11,7 +11,8 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
     case Types.FETCH_MORE_DETAILS:
       const pokeList = [...state.pokeList];
       pokeList.forEach((pokemon) => {
-        if (pokemon.id === action.pokemonId) {
+        const payload = action.payload;
+        if (pokemon.id === payload.pokemonId) {
           pokemon.name = 'Avinash';
         }
       });

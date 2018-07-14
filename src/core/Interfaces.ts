@@ -36,5 +36,8 @@ export interface IAppState {
 }
 
 export interface ICustomAction extends Action {
-  pokemonId: number;
+  type: string;
+  payload?: any;
+  meta?: any;
+  error?: any;
 }

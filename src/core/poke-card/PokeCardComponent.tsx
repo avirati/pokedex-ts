@@ -127,7 +127,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IMapperProps => {
   return {
     onFetchMoreDetails: (id: number) => {
       dispatch({
-        pokemonId: id,
+        payload: {
+          pokemonId: id,
+        },
         type: Types.FETCH_MORE_DETAILS,
       });
     },
