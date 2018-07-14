@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-interface IPokemonMoves {
+export interface IPokemonMoves {
   move: {
     name: string;
   };

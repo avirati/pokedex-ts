@@ -6,7 +6,7 @@ interface IProps {
   pokemonData: IPokemon;
 }
 
-export default class PokeBall extends React.Component<IProps> {
+export default class PokeBallElement extends React.Component<IProps> {
   public render() {
     const { onFetchMoreDetails, pokemonData } = this.props;
 

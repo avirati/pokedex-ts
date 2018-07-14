@@ -6,7 +6,10 @@ import { AnyAction, Dispatch } from 'redux';
 
 import { IPokemon } from '../Interfaces';
 import { fetchMoreDetails } from '../actions';
-import PokeBall from './PokeBall';
+import PokeBallElement from './PokeBallElement';
+import PokemonMovesElement from './PokemonMovesElement';
+import PokemonPreviewElement from './PokemonPreviewElement';
+import PokemonStatElement from './PokemonStatElement';
 
 interface IProps {
   pokemonData: IPokemon;
@@ -31,66 +34,18 @@ class PokeCardComponent extends React.Component <IProps, IState> {
         <div className='row poke-card'>
           <div
             className='col s12 research-card'>
-            <div className='image-container'>
-              <div className='row'>
-                <div className='col s12'>
-                  <img src={pData.sprites.front_default} className='pokemon-avatar'/>
-                </div>
-              </div>
-            </div>
+            <PokemonPreviewElement imageSrc={pData.sprites.front_default}/>
             <div className='description-container'>
-              <div className='row margin-bottom--0'>
-                <div className='col s12'>
-                  <label>Name: </label>
-                  <span>{pokemonData.name}</span>
-                </div>
-              </div>
-              <div className='row margin-bottom--0'>
-                <div className='col s12'>
-                  <label>XP: </label>
-                  <span>{pData.base_experience}</span>
-                </div>
-              </div>
-              <div className='row margin-bottom--0'>
-                <div className='col s12'>
-                  <label>Height: </label>
-                  <span>{pData.height}</span>
-                </div>
-              </div>
-              <div className='row margin-bottom--0'>
-                <div className='col s12'>
-                  <label>Weight: </label>
-                  <span>{pData.weight}</span>
-                </div>
-              </div>
-              <div
-                className='row margin-bottom--0'
-                ng-repeat='obj in pData.stats'
-              >
-                {
+              <PokemonStatElement label={'Name:'} value={pokemonData.name}/>
+              <PokemonStatElement label={'XP:'} value={pData.base_experience}/>
+              <PokemonStatElement label={'Height:'} value={pData.height}/>
+              <PokemonStatElement label={'Weight:'} value={pData.weight}/>
+              {
                 pData.stats.map((obj, index) => {
-                  return (
-                    <div className='col s12' key={index}>
-                      <label>{obj.stat.name}</label>
-                      <span>{obj.base_stat}</span>
-                    </div>
-                  );
+                  return <PokemonStatElement label={obj.stat.name} value={obj.base_stat} key={index}/>;
                 })
               }
-              </div>
-              <div className='row margin-bottom--0 only-desktop moves-list'>
-                <div className='col s12'>
-                {
-                  pData.moves.map((obj, index) => {
-                    return (
-                      <div className='pill' key={index}>
-                        {obj.move.name}
-                      </div>
-                    );
-                  })
-                }
-                </div>
-              </div>
+              <PokemonMovesElement movesList={pData.moves}/>
             </div>
             <div
               className='heart'
@@ -101,7 +56,7 @@ class PokeCardComponent extends React.Component <IProps, IState> {
       );
     } else {
       return (
-        <PokeBall pokemonData={pokemonData} onFetchMoreDetails={onFetchMoreDetails}/>
+        <PokeBallElement pokemonData={pokemonData} onFetchMoreDetails={onFetchMoreDetails}/>
       );
     }
   }
