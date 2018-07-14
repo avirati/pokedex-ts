@@ -7,16 +7,16 @@ const initialState: IAppState = {
 };
 
 const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: ICustomAction): IAppState => {
+  const pokeList = [...state.pokeList];
   switch (action.type) {
-    case Types.FETCH_MORE_DETAILS:
-      const pokeList = [...state.pokeList];
-      pokeList.forEach((pokemon) => {
-        const payload = action.payload;
-        if (pokemon.id === payload.pokemonId) {
-          pokemon.name = 'Avinash';
-        }
-      });
-      return { pokeList };
+    case Types.FETCH_MORE_DETAILS_SUCCESS:
+        pokeList.forEach((pokemon) => {
+          const payload = action.payload;
+          if (pokemon.id === payload.pokemonId) {
+            pokemon.researchData = action.payload.researchData;
+          }
+        });
+        return { pokeList };
   }
   return state;
 };
