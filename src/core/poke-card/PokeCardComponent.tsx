@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 
 import { IPokemon } from '../Interfaces';
-import * as Types from '../types';
+import { fetchMoreDetails } from '../actions';
+import PokeBall from './PokeBall';
 
 interface IProps {
   pokemonData: IPokemon;
@@ -100,20 +101,7 @@ class PokeCardComponent extends React.Component <IProps, IState> {
       );
     } else {
       return (
-        <div className='row poke-card' onClick={(e) => onFetchMoreDetails(pokemonData.id)}>
-          <div className='col s12 m3'>
-            <div className='row'>
-              <div className='col s12'>
-                <div
-                  className='pokeball'
-                />
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col s12 name'>{pokemonData.name}</div>
-            </div>
-          </div>
-        </div>
+        <PokeBall pokemonData={pokemonData} onFetchMoreDetails={onFetchMoreDetails}/>
       );
     }
   }
@@ -126,12 +114,7 @@ const mapStateToProps = (state: IState): IState => {
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IMapperProps => {
   return {
     onFetchMoreDetails: (id: number) => {
-      dispatch({
-        payload: {
-          pokemonId: id,
-        },
-        type: Types.FETCH_MORE_DETAILS,
-      });
+      dispatch(fetchMoreDetails(id));
     },
   };
 };
