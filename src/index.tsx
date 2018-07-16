@@ -10,13 +10,10 @@ import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 
 import App from './App';
-import { IPokemon } from './core/Interfaces';
 import reducer from './core/reducer';
 import rootSaga from './core/sagas';
 import { composeEnhancers } from './core/utils';
 import registerServiceWorker from './registerServiceWorker';
-
-const db: IPokemon[] = require('./dump.json');
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -39,9 +36,7 @@ function configureStore(initialState?: object) {
   return { store, persistor };
 }
 
-const { store, persistor } = configureStore({
-  pokeList: db,
-});
+const { store, persistor } = configureStore();
 
 sagaMiddleware.run(rootSaga);
 
