@@ -49,7 +49,6 @@ class PokeCardComponent extends React.Component <IProps, IState> {
             </div>
             <div
               className='heart'
-              ng-click='PokeCardCtrl.toggleSavePokemon()'
             />
           </div>
         </div>
