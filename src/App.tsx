@@ -21,6 +21,7 @@ interface IProps {
 
 interface IState {
   pokeList: IPokemon[];
+  showSavedPokemon: boolean;
 }
 
 class App extends React.Component <IProps, IState> {
@@ -34,6 +35,7 @@ class App extends React.Component <IProps, IState> {
 
     this.state = {
       pokeList: [],
+      showSavedPokemon: false,
     };
   }
 
@@ -72,18 +74,26 @@ class App extends React.Component <IProps, IState> {
     this.props.filterPokemonList(filterText);
   }
 
+  onSavedSwitchToggled(toggledState: boolean) {
+    this.setState({
+      ...this.state,
+      showSavedPokemon: toggledState,
+    });
+  }
+
   public render() {
     const onContainerEndReached = this.onContainerEndReached.bind(this);
     const onFilterTextChanged = this.onFilterTextChanged.bind(this);
+    const onSavedSwitchToggled = this.onSavedSwitchToggled.bind(this);
     return (
       <div className='container-fluid pokedex-app' ref={(ref: HTMLDivElement) => { this.containerNode = ref; }}>
         <HeaderComponent />
         <div className='pokemon-controls'>
           <PokeFilterComponent onFilterTextChanged={onFilterTextChanged}/>
-          <SavedPokemonSwitchComponent />
+          <SavedPokemonSwitchComponent onSwitchToggled={onSavedSwitchToggled}/>
         </div>
         <ScrollHandler targetElement={this.containerNode} onEndReached={onContainerEndReached}>
-          <PokeListComponent pokeList={this.props.pokeList}/>
+          <PokeListComponent pokeList={this.props.pokeList} showSavedPokemon={this.state.showSavedPokemon}/>
         </ScrollHandler>
         <FooterComponent />
       </div>

@@ -5,6 +5,7 @@ import PokeCardComponent from '../poke-card';
 
 interface IProps {
   pokeList: IPokemon[];
+  showSavedPokemon?: boolean;
 }
 
 interface IState {
@@ -16,7 +17,11 @@ class PokeListComponent extends React.Component <IProps, IState> {
     const { pokeList } = this.props;
     return pokeList
           .filter((pokemon) => {
-            return !pokemon.hide;
+            if (this.props.showSavedPokemon) {
+              return !pokemon.hide && pokemon.favorite;
+            } else {
+              return !pokemon.hide;
+            }
           })
           .map((pokemon, index) => {
             return <PokeCardComponent pokemonData={pokemon} key={index}/>;
