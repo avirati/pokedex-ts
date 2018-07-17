@@ -9,6 +9,7 @@ import { FooterComponent, HeaderComponent } from './core/Components';
 import { IAppState, IPokemon } from './core/Interfaces';
 import { fetchPokemonList } from './core/actions';
 import PokeListComponent from './core/poke-list';
+import ScrollHandler from './core/scroll-handler';
 
 interface IProps {
   pokeList: IPokemon[];
@@ -20,6 +21,10 @@ interface IState {
 }
 
 class App extends React.Component <IProps, IState> {
+  private containerNode: HTMLDivElement;
+  private fetchingPokemon: boolean = false;
+  private FETCH_LIMIT: number = 20;
+  private FETCH_OFFSET: number = 20;
 
   constructor(props: IProps) {
     super(props);
@@ -39,13 +44,13 @@ class App extends React.Component <IProps, IState> {
       });
     } else {
       console.log('Poke List Empty, Fetching from server');
-      this.props.fetchPokemonList(20, 0);
+      this.props.fetchPokemonList(this.FETCH_LIMIT, 0);
     }
   }
 
   public componentWillReceiveProps(nextProps: IProps) {
-    console.log(nextProps.pokeList.length);
     this.setState((prevState: IState) => {
+      this.fetchingPokemon = false;
       return {
         ...prevState,
         pokeList: [...nextProps.pokeList],
@@ -53,11 +58,21 @@ class App extends React.Component <IProps, IState> {
     });
   }
 
+  public onContainerEndReached() {
+    if (!this.fetchingPokemon) {
+      this.props.fetchPokemonList(this.FETCH_LIMIT, this.props.pokeList.length + this.FETCH_OFFSET);
+      this.fetchingPokemon = true;
+    }
+  }
+
   public render() {
+    const onContainerEndReached = this.onContainerEndReached.bind(this);
     return (
-      <div className='container-fluid pokedex-app'>
+      <div className='container-fluid pokedex-app' ref={(ref: HTMLDivElement) => { this.containerNode = ref; }}>
         <HeaderComponent />
-        <PokeListComponent pokeList={this.props.pokeList}/>
+        <ScrollHandler targetElement={this.containerNode} onEndReached={onContainerEndReached}>
+          <PokeListComponent pokeList={this.props.pokeList}/>
+        </ScrollHandler>
         <FooterComponent />
       </div>
     );

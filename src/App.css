@@ -1,3 +1,8 @@
+html, body, #root {
+  height: 100%;
+  display: block;
+}
+
 .disabled,
 .exhausted,
 .incapable {
@@ -61,4 +66,11 @@
 .heart.active:before,
 .heart.active:after {
   background: #fc2e5a;
+}
+
+.pokedex-app {
+  height: 100%;
+  overflow: scroll;
+  display: block;
+  position: relative;
 }
