@@ -30,6 +30,7 @@ export interface IPokemon {
   name: string;
   researchData?: IPokemonResearchData;
   hide?: boolean;
+  favorite?: boolean;
 }
 
 export interface IAppState {

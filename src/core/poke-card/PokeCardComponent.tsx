@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 
 import { IPokemon } from '../Interfaces';
-import { fetchMoreDetails } from '../actions';
+import { favoriteToggled, fetchMoreDetails } from '../actions';
 import PokeBallElement from './PokeBallElement';
 import PokemonMovesElement from './PokemonMovesElement';
 import PokemonPreviewElement from './PokemonPreviewElement';
@@ -14,10 +14,12 @@ import PokemonStatElement from './PokemonStatElement';
 interface IProps {
   pokemonData: IPokemon;
   onFetchMoreDetails?: (id: number) => void;
+  onFavoriteToggled?: (id: number) => void;
 }
 
 interface IMapperProps {
   onFetchMoreDetails?: (id: number) => void;
+  onFavoriteToggled?: (id: number) => void;
 }
 
 interface IState {
@@ -26,30 +28,32 @@ interface IState {
 
 class PokeCardComponent extends React.Component <IProps, IState> {
   public render() {
-    const { pokemonData, onFetchMoreDetails = (id: number) => console.log(id) } = this.props;
-    const pData = pokemonData.researchData;
+    const { pokemonData,
+            onFetchMoreDetails = (id: number) => console.log(id),
+            onFavoriteToggled = (id: number) => console.log(id) } = this.props;
+    const researchData = pokemonData.researchData;
 
-    if (pData) {
+    const heartClass = pokemonData.favorite ? 'heart active' : 'heart';
+
+    if (researchData) {
       return (
         <div className='row poke-card'>
           <div
             className='col s12 research-card'>
-            <PokemonPreviewElement imageSrc={pData.sprites.front_default}/>
+            <PokemonPreviewElement imageSrc={researchData.sprites.front_default}/>
             <div className='description-container'>
               <PokemonStatElement label={'Name:'} value={pokemonData.name}/>
-              <PokemonStatElement label={'XP:'} value={pData.base_experience}/>
-              <PokemonStatElement label={'Height:'} value={pData.height}/>
-              <PokemonStatElement label={'Weight:'} value={pData.weight}/>
+              <PokemonStatElement label={'XP:'} value={researchData.base_experience}/>
+              <PokemonStatElement label={'Height:'} value={researchData.height}/>
+              <PokemonStatElement label={'Weight:'} value={researchData.weight}/>
               {
-                pData.stats.map((obj, index) => {
+                researchData.stats.map((obj, index) => {
                   return <PokemonStatElement label={obj.stat.name} value={obj.base_stat} key={index}/>;
                 })
               }
-              <PokemonMovesElement movesList={pData.moves}/>
+              <PokemonMovesElement movesList={researchData.moves}/>
             </div>
-            <div
-              className='heart'
-            />
+            <div className={heartClass} onClick={(e) => { onFavoriteToggled(pokemonData.id); }}/>
           </div>
         </div>
       );
@@ -67,6 +71,9 @@ const mapStateToProps = (state: IState): IState => {
 
 const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): IMapperProps => {
   return {
+    onFavoriteToggled: (id: number) => {
+      dispatch(favoriteToggled(id));
+    },
     onFetchMoreDetails: (id: number) => {
       dispatch(fetchMoreDetails(id));
     },

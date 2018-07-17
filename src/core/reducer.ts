@@ -17,9 +17,13 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
           pokemon.researchData = action.payload.researchData;
         }
       });
-      return { pokeList };
+      return {
+        ...state,
+        pokeList,
+      };
     case Types.FETCH_POKEMON_LIST_SUCCESS:
       return {
+        ...state,
         pokeList: [
           ...pokeList,
           ...action.payload.newList,
@@ -34,7 +38,21 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         pokemon.hide = pokemon.name.toLowerCase().indexOf(filterText) === -1;
       });
       return {
+        ...state,
         pokeList: filteredPokemon,
+      };
+
+    case Types.FAVORITE_TOGGLED:
+      const newList = [...pokeList];
+
+      newList.forEach((pokemon) => {
+        if (pokemon.id === action.payload.pokemonId) {
+          pokemon.favorite = !(pokemon.favorite);
+        }
+      });
+      return {
+        ...state,
+        pokeList: newList,
       };
   }
   return state;

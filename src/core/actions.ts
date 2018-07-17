@@ -27,3 +27,12 @@ export const filterPokemonList = (filterText: string) => {
     type: Types.FILTER_POKEMON_LIST,
   };
 };
+
+export const favoriteToggled = (pokemonId: number) => {
+  return {
+    payload: {
+      pokemonId,
+    },
+    type: Types.FAVORITE_TOGGLED,
+  };
+};
