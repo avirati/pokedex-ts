@@ -73,7 +73,7 @@ html, body, #root {
   overflow: scroll;
   display: block;
   position: relative;
-  padding-top: 110px 0px;
+  padding: 110px 0px;
 }
 
 .pokemon-controls {
