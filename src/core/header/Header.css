@@ -4,6 +4,8 @@ h1.logo-wrapper {
 
 header#header {
   z-index: 10;
+  position: fixed;
+  top: 0px;
 }
 
 header .brand-logo {

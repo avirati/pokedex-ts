@@ -1,0 +1,5 @@
+input[type='text'].pokemon-filter {
+  width: 50%;
+  margin: 0;
+  height: 25px;
+}

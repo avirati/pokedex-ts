@@ -8,7 +8,9 @@ import { AnyAction, Dispatch } from 'redux';
 import { FooterComponent, HeaderComponent } from './core/Components';
 import { IAppState, IPokemon } from './core/Interfaces';
 import { fetchPokemonList } from './core/actions';
+import PokeFilterComponent from './core/poke-filter';
 import PokeListComponent from './core/poke-list';
+import SavedPokemonSwitchComponent from './core/saved-pokemon-switch';
 import ScrollHandler from './core/scroll-handler';
 
 interface IProps {
@@ -70,6 +72,10 @@ class App extends React.Component <IProps, IState> {
     return (
       <div className='container-fluid pokedex-app' ref={(ref: HTMLDivElement) => { this.containerNode = ref; }}>
         <HeaderComponent />
+        <div className='pokemon-controls'>
+          <PokeFilterComponent />
+          <SavedPokemonSwitchComponent />
+        </div>
         <ScrollHandler targetElement={this.containerNode} onEndReached={onContainerEndReached}>
           <PokeListComponent pokeList={this.props.pokeList}/>
         </ScrollHandler>
