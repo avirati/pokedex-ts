@@ -7,7 +7,7 @@ import { AnyAction, Dispatch } from 'redux';
 
 import { FooterComponent, HeaderComponent } from './core/Components';
 import { IAppState, IPokemon } from './core/Interfaces';
-import { fetchPokemonList } from './core/actions';
+import { fetchPokemonList, filterPokemonList } from './core/actions';
 import PokeFilterComponent from './core/poke-filter';
 import PokeListComponent from './core/poke-list';
 import SavedPokemonSwitchComponent from './core/saved-pokemon-switch';
@@ -16,6 +16,7 @@ import ScrollHandler from './core/scroll-handler';
 interface IProps {
   pokeList: IPokemon[];
   fetchPokemonList: (limit: number, offset: number) => void;
+  filterPokemonList: (filterText: string) => void;
 }
 
 interface IState {
@@ -60,20 +61,25 @@ class App extends React.Component <IProps, IState> {
     });
   }
 
-  public onContainerEndReached() {
+  onContainerEndReached() {
     if (!this.fetchingPokemon) {
       this.props.fetchPokemonList(this.FETCH_LIMIT, this.props.pokeList.length + this.FETCH_OFFSET);
       this.fetchingPokemon = true;
     }
   }
 
+  onFilterTextChanged(filterText: string) {
+    this.props.filterPokemonList(filterText);
+  }
+
   public render() {
     const onContainerEndReached = this.onContainerEndReached.bind(this);
+    const onFilterTextChanged = this.onFilterTextChanged.bind(this);
     return (
       <div className='container-fluid pokedex-app' ref={(ref: HTMLDivElement) => { this.containerNode = ref; }}>
         <HeaderComponent />
         <div className='pokemon-controls'>
-          <PokeFilterComponent />
+          <PokeFilterComponent onFilterTextChanged={onFilterTextChanged}/>
           <SavedPokemonSwitchComponent />
         </div>
         <ScrollHandler targetElement={this.containerNode} onEndReached={onContainerEndReached}>
@@ -95,6 +101,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
   return {
     fetchPokemonList: (limit: number, offset: number) => {
       dispatch(fetchPokemonList(limit, offset));
+    },
+    filterPokemonList: (filterText: string) => {
+      dispatch(filterPokemonList(filterText));
     },
   };
 };

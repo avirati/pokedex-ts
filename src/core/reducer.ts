@@ -25,6 +25,17 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
           ...action.payload.newList,
         ],
       };
+
+    case Types.FILTER_POKEMON_LIST:
+      const filteredPokemon = [...pokeList];
+      const filterText = action.payload.filterText.toLowerCase();
+
+      filteredPokemon.forEach((pokemon) => {
+        pokemon.hide = pokemon.name.toLowerCase().indexOf(filterText) === -1;
+      });
+      return {
+        pokeList: filteredPokemon,
+      };
   }
   return state;
 };

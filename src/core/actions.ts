@@ -18,3 +18,12 @@ export const fetchPokemonList = (limit: number, offset: number) => {
     type: Types.FETCH_POKEMON_LIST,
   };
 };
+
+export const filterPokemonList = (filterText: string) => {
+  return {
+    payload: {
+      filterText,
+    },
+    type: Types.FILTER_POKEMON_LIST,
+  };
+};

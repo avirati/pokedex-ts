@@ -29,6 +29,7 @@ export interface IPokemon {
   url: string;
   name: string;
   researchData?: IPokemonResearchData;
+  hide?: boolean;
 }
 
 export interface IAppState {
