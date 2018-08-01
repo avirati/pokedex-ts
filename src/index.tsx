@@ -10,8 +10,8 @@ import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 
 import App from './App';
-import reducer from './core/reducer';
-import rootSaga from './core/sagas';
+import reducer from './core/duck/reducer';
+import rootSaga from './core/duck/sagas';
 import { composeEnhancers } from './core/utils';
 import registerServiceWorker from './registerServiceWorker';
 

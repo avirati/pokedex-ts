@@ -1,28 +1,12 @@
 import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 
-import * as ApiUrls from './ApiUrls';
+import * as ApiUrls from '../ApiUrls';
+import { fetchMoreDetails } from '../poke-card/duck/sagas';
+import { FETCH_MORE_DETAILS } from '../poke-card/duck/types';
+import { extractPokemonIdFromUrl } from '../utils';
 import { ICustomAction, IPokemon } from './Interfaces';
 import * as Types from './types';
-import { extractPokemonIdFromUrl } from './utils';
-
-export function* fetchMoreDetails(action: ICustomAction) {
- try {
-  const response = yield call(axios.get, ApiUrls.fetchMoreDetailsUrl(action.payload.pokemonId));
-  yield put({
-    payload: {
-      pokemonId: action.payload.pokemonId,
-      researchData: response.data,
-    },
-    type: Types.FETCH_MORE_DETAILS_SUCCESS,
-  });
- } catch (e) {
-  yield put({
-    payload: e,
-    type: Types.FETCH_MORE_DETAILS_FAILED,
-  });
- }
-}
 
 export function* fetchPokemonList(action: ICustomAction) {
   try {
@@ -46,6 +30,6 @@ export function* fetchPokemonList(action: ICustomAction) {
 }
 
 export default function* rootSaga() {
-  yield takeEvery(Types.FETCH_MORE_DETAILS, fetchMoreDetails);
+  yield takeEvery(FETCH_MORE_DETAILS, fetchMoreDetails);
   yield takeEvery(Types.FETCH_POKEMON_LIST, fetchPokemonList);
 }

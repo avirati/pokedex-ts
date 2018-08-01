@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IPokemon } from '../Interfaces';
+
+import { IPokemon } from '../duck/Interfaces';
 
 interface IProps {
   onFetchMoreDetails: (pokemonId: number) => void;

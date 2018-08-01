@@ -4,12 +4,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 
-import { IPokemon } from '../Interfaces';
-import { favoriteToggled, fetchMoreDetails } from '../actions';
+import { IPokemon } from '../duck/Interfaces';
 import PokeBallElement from './PokeBallElement';
 import PokemonMovesElement from './PokemonMovesElement';
 import PokemonPreviewElement from './PokemonPreviewElement';
 import PokemonStatElement from './PokemonStatElement';
+import { favoriteToggled, fetchMoreDetails } from './duck/actions';
 
 interface IProps {
   pokemonData: IPokemon;

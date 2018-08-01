@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IPokemonMoves } from '../Interfaces';
+
+import { IPokemonMoves } from '../duck/Interfaces';
 
 interface IProps {
   movesList: IPokemonMoves[];

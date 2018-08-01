@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IPokemon } from '../Interfaces';
+import { IPokemon } from '../duck/Interfaces';
 import PokeCardComponent from '../poke-card';
 
 interface IProps {

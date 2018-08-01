@@ -1,7 +1,8 @@
 import { Reducer } from 'redux';
 
+import { FAVORITE_TOGGLED, FETCH_MORE_DETAILS_SUCCESS } from '../poke-card/duck/types';
 import { IAppState, ICustomAction } from './Interfaces';
-import * as Types from './types';
+import { FETCH_POKEMON_LIST_SUCCESS, FILTER_POKEMON_LIST } from './types';
 
 const initialState: IAppState = {
   pokeList: [],
@@ -10,7 +11,7 @@ const initialState: IAppState = {
 const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: ICustomAction): IAppState => {
   const pokeList = [...state.pokeList];
   switch (action.type) {
-    case Types.FETCH_MORE_DETAILS_SUCCESS:
+    case FETCH_MORE_DETAILS_SUCCESS:
       pokeList.forEach((pokemon) => {
         const payload = action.payload;
         if (pokemon.id === payload.pokemonId) {
@@ -21,7 +22,7 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         ...state,
         pokeList,
       };
-    case Types.FETCH_POKEMON_LIST_SUCCESS:
+    case FETCH_POKEMON_LIST_SUCCESS:
       return {
         ...state,
         pokeList: [
@@ -30,7 +31,7 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         ],
       };
 
-    case Types.FILTER_POKEMON_LIST:
+    case FILTER_POKEMON_LIST:
       const filteredPokemon = [...pokeList];
       const filterText = action.payload.filterText.toLowerCase();
 
@@ -42,7 +43,7 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         pokeList: filteredPokemon,
       };
 
-    case Types.FAVORITE_TOGGLED:
+    case FAVORITE_TOGGLED:
       const newList = [...pokeList];
 
       newList.forEach((pokemon) => {

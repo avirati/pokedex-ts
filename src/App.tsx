@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { AnyAction, Dispatch } from 'redux';
 
 import { FooterComponent, HeaderComponent } from './core/Components';
-import { IAppState, IPokemon } from './core/Interfaces';
-import { fetchPokemonList, filterPokemonList } from './core/actions';
+import { IAppState, IPokemon } from './core/duck/Interfaces';
+import { fetchPokemonList, filterPokemonList } from './core/duck/actions';
 import PokeFilterComponent from './core/poke-filter';
 import PokeListComponent from './core/poke-list';
 import SavedPokemonSwitchComponent from './core/saved-pokemon-switch';
