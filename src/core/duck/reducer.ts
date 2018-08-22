@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 
 import { FAVORITE_TOGGLED, FETCH_MORE_DETAILS_SUCCESS } from '../poke-card/duck/types';
-import { IAppState, ICustomAction, IPokemon } from './Interfaces';
+import { IAppState, ICustomAction } from './Interfaces';
 import { FETCH_POKEMON_LIST_SUCCESS, FILTER_POKEMON_LIST, TOGGLE_SAVED_SWITCH } from './types';
 
 const initialState: IAppState = {
@@ -45,23 +45,18 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
       };
 
     case FAVORITE_TOGGLED:  // When we mark a pokemon as favorite
-      const affectedObjects: Array<{index: number; pokemon: IPokemon}> = [];
-      pokeList.forEach((pokemon, index) => {
-        if (pokemon.id === action.payload.pokemonId) {
-          affectedObjects.push({
-            index,
-            pokemon: {
-              ...pokemon,
-              favorite: !(pokemon.favorite),
-            },
-          });
-        }
+      const favoriteToggledPokemonIndex: number = pokeList.findIndex((pokemon) => {
+        return pokemon.id === action.payload.pokemonId;
       });
-
-      const updatedPokemonList = [...pokeList];
-      affectedObjects.forEach((obj) => {
-        updatedPokemonList[obj.index] = obj.pokemon;
-      });
+      const favoriteToggledPokemon = pokeList[favoriteToggledPokemonIndex];
+      const updatedPokemon = {
+        ...favoriteToggledPokemon,
+        favorite: !(favoriteToggledPokemon.favorite),
+      };
+      const updatedPokemonList = [
+        ...pokeList.slice(0, favoriteToggledPokemonIndex),
+        updatedPokemon,
+        ...pokeList.slice(favoriteToggledPokemonIndex + 1)];
 
       return {
         ...state,
