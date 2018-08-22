@@ -45,9 +45,7 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
       };
 
     case FAVORITE_TOGGLED:  // When we mark a pokemon as favorite
-      const favoriteToggledPokemonIndex: number = pokeList.findIndex((pokemon) => {
-        return pokemon.id === action.payload.pokemonId;
-      });
+      const favoriteToggledPokemonIndex: number = pokeList.findIndex((pokemon) => pokemon.id === action.payload.pokemonId);
       const favoriteToggledPokemon = pokeList[favoriteToggledPokemonIndex];
       const updatedPokemon = {
         ...favoriteToggledPokemon,
