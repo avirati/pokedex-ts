@@ -2,9 +2,10 @@ import { Reducer } from 'redux';
 
 import { FAVORITE_TOGGLED, FETCH_MORE_DETAILS_SUCCESS } from '../poke-card/duck/types';
 import { IAppState, ICustomAction } from './Interfaces';
-import { FETCH_POKEMON_LIST_SUCCESS, FILTER_POKEMON_LIST } from './types';
+import { FETCH_POKEMON_LIST_SUCCESS, FILTER_POKEMON_LIST, TOGGLE_SAVED_SWITCH } from './types';
 
 const initialState: IAppState = {
+  favoriteToggleSwitch: false,
   pokeList: [],
 };
 
@@ -43,7 +44,7 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         pokeList: filteredPokemon,
       };
 
-    case FAVORITE_TOGGLED:
+    case FAVORITE_TOGGLED:  // When we mark a pokemon as favorite
       const newList = [...pokeList];
 
       newList.forEach((pokemon) => {
@@ -54,6 +55,12 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
       return {
         ...state,
         pokeList: newList,
+      };
+
+    case TOGGLE_SAVED_SWITCH: // When we want to switch to all saved pokemon
+      return {
+        ...state,
+        favoriteToggleSwitch: action.payload.toggledState,
       };
   }
   return state;

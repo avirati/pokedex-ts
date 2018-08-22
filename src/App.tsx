@@ -7,7 +7,7 @@ import { AnyAction, Dispatch } from 'redux';
 
 import { FooterComponent, HeaderComponent } from './core/Components';
 import { IAppState, IPokemon } from './core/duck/Interfaces';
-import { fetchPokemonList, filterPokemonList } from './core/duck/actions';
+import { fetchPokemonList, filterPokemonList, showSavedPokemon } from './core/duck/actions';
 import PokeFilterComponent from './core/poke-filter';
 import PokeListComponent from './core/poke-list';
 import SavedPokemonSwitchComponent from './core/saved-pokemon-switch';
@@ -17,31 +17,18 @@ interface IProps {
   pokeList: IPokemon[];
   fetchPokemonList: (limit: number, offset: number) => void;
   filterPokemonList: (filterText: string) => void;
+  showSavedPokemon: (toggledState: boolean) => void;
 }
 
-interface IState {
-  pokeList: IPokemon[];
-  showSavedPokemon: boolean;
-}
-
-class App extends React.Component <IProps, IState> {
+class App extends React.Component <IProps> {
   private containerNode: HTMLDivElement;
   private fetchingPokemon: boolean = false;
   private FETCH_LIMIT: number = 20;
   private FETCH_OFFSET: number = 20;
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      pokeList: [],
-      showSavedPokemon: false,
-    };
-  }
-
   public componentDidMount() {
     if (this.props.pokeList.length > 0) {
-      this.setState((prevState: IState) => {
+      this.setState((prevState: IAppState) => {
         return {
           ...prevState,
           pokeList: [...this.props.pokeList],
@@ -54,7 +41,7 @@ class App extends React.Component <IProps, IState> {
   }
 
   public componentWillReceiveProps(nextProps: IProps) {
-    this.setState((prevState: IState) => {
+    this.setState((prevState: IAppState) => {
       this.fetchingPokemon = false;
       return {
         ...prevState,
@@ -74,17 +61,10 @@ class App extends React.Component <IProps, IState> {
     this.props.filterPokemonList(filterText);
   }
 
-  onSavedSwitchToggled(toggledState: boolean) {
-    this.setState({
-      ...this.state,
-      showSavedPokemon: toggledState,
-    });
-  }
-
   public render() {
     const onContainerEndReached = this.onContainerEndReached.bind(this);
     const onFilterTextChanged = this.onFilterTextChanged.bind(this);
-    const onSavedSwitchToggled = this.onSavedSwitchToggled.bind(this);
+    const onSavedSwitchToggled = this.props.showSavedPokemon.bind(this);
     return (
       <div className='container-fluid pokedex-app' ref={(ref: HTMLDivElement) => { this.containerNode = ref; }}>
         <HeaderComponent />
@@ -93,7 +73,7 @@ class App extends React.Component <IProps, IState> {
           <SavedPokemonSwitchComponent onSwitchToggled={onSavedSwitchToggled}/>
         </div>
         <ScrollHandler targetElement={this.containerNode} onEndReached={onContainerEndReached}>
-          <PokeListComponent pokeList={this.props.pokeList} showSavedPokemon={this.state.showSavedPokemon}/>
+          <PokeListComponent/>
         </ScrollHandler>
         <FooterComponent />
       </div>
@@ -114,6 +94,9 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
     },
     filterPokemonList: (filterText: string) => {
       dispatch(filterPokemonList(filterText));
+    },
+    showSavedPokemon: (toggledState: boolean) => {
+      dispatch(showSavedPokemon(toggledState));
     },
   };
 };

@@ -1,23 +1,19 @@
 import * as React from 'react';
-
-import { IPokemon } from '../duck/Interfaces';
+import { connect } from 'react-redux';
+import { IAppState, IPokemon } from '../duck/Interfaces';
 import PokeCardComponent from '../poke-card';
 
 interface IProps {
   pokeList: IPokemon[];
-  showSavedPokemon?: boolean;
+  favoriteToggleSwitch?: boolean;
 }
 
-interface IState {
-
-}
-
-class PokeListComponent extends React.Component <IProps, IState> {
+class PokeListComponent extends React.Component <IProps> {
   public render() {
     const { pokeList } = this.props;
     return pokeList
           .filter((pokemon) => {
-            if (this.props.showSavedPokemon) {
+            if (this.props.favoriteToggleSwitch) {
               return !pokemon.hide && pokemon.favorite;
             } else {
               return !pokemon.hide;
@@ -29,4 +25,13 @@ class PokeListComponent extends React.Component <IProps, IState> {
   }
 }
 
-export default PokeListComponent;
+const mapStateToProps = (state: IAppState) => {
+  return {
+    favoriteToggleSwitch: state.favoriteToggleSwitch,
+    pokeList: state.pokeList,
+  };
+};
+
+export default connect (
+  mapStateToProps,
+)(PokeListComponent);

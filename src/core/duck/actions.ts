@@ -18,3 +18,12 @@ export const filterPokemonList = (filterText: string) => {
     type: Types.FILTER_POKEMON_LIST,
   };
 };
+
+export const showSavedPokemon = (toggledState: boolean) => {
+  return {
+    payload: {
+      toggledState,
+    },
+    type: Types.TOGGLE_SAVED_SWITCH,
+  };
+};

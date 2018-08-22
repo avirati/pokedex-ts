@@ -34,6 +34,7 @@ export interface IPokemon {
 }
 
 export interface IAppState {
+  favoriteToggleSwitch: boolean;
   pokeList: IPokemon[];
 }
 
