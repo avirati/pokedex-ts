@@ -17,3 +17,8 @@ export const extractPokemonIdFromUrl = (url: string): number => {
   const id = (idMatch && idMatch[0].substring(1)) || '-1';
   return +id;
 };
+
+export const replaceAtPosition = <T>(sourceArr: T[], objToReplace: T, replaceIndex: number): T[] => ([
+  ...sourceArr.slice(0, replaceIndex),
+  objToReplace,
+  ...sourceArr.slice(replaceIndex + 1)]);

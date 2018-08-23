@@ -1,7 +1,8 @@
 import { Reducer } from 'redux';
+import { replaceAtPosition } from '../utils';
 
 import { FAVORITE_TOGGLED, FETCH_MORE_DETAILS_SUCCESS } from '../poke-card/duck/types';
-import { IAppState, ICustomAction } from './Interfaces';
+import { IAppState, ICustomAction, IPokemon } from './Interfaces';
 import { FETCH_POKEMON_LIST_SUCCESS, FILTER_POKEMON_LIST, TOGGLE_SAVED_SWITCH } from './types';
 
 const initialState: IAppState = {
@@ -10,19 +11,28 @@ const initialState: IAppState = {
 };
 
 const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: ICustomAction): IAppState => {
-  const pokeList = [...state.pokeList];
+  const pokeList = state.pokeList;
   switch (action.type) {
-    case FETCH_MORE_DETAILS_SUCCESS:
-      pokeList.forEach((pokemon) => {
-        const payload = action.payload;
-        if (pokemon.id === payload.pokemonId) {
-          pokemon.researchData = action.payload.researchData;
-        }
+    case FETCH_MORE_DETAILS_SUCCESS: {
+      const pokemonIndexToUpdate = pokeList.findIndex((pokemon: IPokemon) => {
+        return pokemon.id === action.payload.pokemonId;
       });
+      const pokemonToUpdate = pokeList[pokemonIndexToUpdate];
+      if (!pokemonToUpdate) {
+        return state;
+      }
+      const updatedPokemon = {
+        ...pokemonToUpdate,
+        researchData: action.payload.researchData,
+      };
+
+      const updatedPokemonList = replaceAtPosition(pokeList, updatedPokemon, pokemonIndexToUpdate);
+
       return {
         ...state,
-        pokeList,
+        pokeList: updatedPokemonList,
       };
+    }
     case FETCH_POKEMON_LIST_SUCCESS:
       return {
         ...state,
@@ -32,19 +42,24 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         ],
       };
 
-    case FILTER_POKEMON_LIST:
-      const filteredPokemon = [...pokeList];
+    case FILTER_POKEMON_LIST: {
       const filterText = action.payload.filterText.toLowerCase();
 
-      filteredPokemon.forEach((pokemon) => {
-        pokemon.hide = pokemon.name.toLowerCase().indexOf(filterText) === -1;
-      });
+      const matches = pokeList
+                      .map((pokemon) => { // We need to alter all pokemon so that the hidden pokemon do not stay hidden always
+                        return {
+                          ...pokemon,
+                          hide: pokemon.name.toLowerCase().indexOf(filterText) === -1,
+                        };
+                      });
+
       return {
         ...state,
-        pokeList: filteredPokemon,
+        pokeList: matches,
       };
+    }
 
-    case FAVORITE_TOGGLED:  // When we mark a pokemon as favorite
+    case FAVORITE_TOGGLED:  {// When we mark a pokemon as favorite
       const favoriteToggledPokemonIndex: number = pokeList.findIndex((pokemon) => pokemon.id === action.payload.pokemonId);
       const favoriteToggledPokemon = pokeList[favoriteToggledPokemonIndex];
 
@@ -56,15 +71,13 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
         ...favoriteToggledPokemon,
         favorite: !(favoriteToggledPokemon.favorite),
       };
-      const updatedPokemonList = [
-        ...pokeList.slice(0, favoriteToggledPokemonIndex),
-        updatedPokemon,
-        ...pokeList.slice(favoriteToggledPokemonIndex + 1)];
+      const updatedPokemonList = replaceAtPosition(pokeList, updatedPokemon, favoriteToggledPokemonIndex);
 
       return {
         ...state,
         pokeList: updatedPokemonList,
       };
+    }
 
     case TOGGLE_SAVED_SWITCH: // When we want to switch to all saved pokemon
       return {
