@@ -47,10 +47,16 @@ const reducer: Reducer<IAppState> = (state: IAppState = initialState, action: IC
 
       const matches = pokeList
                       .map((pokemon) => { // We need to alter all pokemon so that the hidden pokemon do not stay hidden always
-                        return {
-                          ...pokemon,
-                          hide: pokemon.name.toLowerCase().indexOf(filterText) === -1,
-                        };
+                        const shouldHide = pokemon.name.toLowerCase().indexOf(filterText) === -1;
+                        // If hidden state has not changed, return the original object so that re render does not occur
+                        if (shouldHide === pokemon.hide) {
+                          return pokemon;
+                        } else {
+                          return {
+                            ...pokemon,
+                            hide: pokemon.name.toLowerCase().indexOf(filterText) === -1,
+                          };
+                        }
                       });
 
       return {
