@@ -20,7 +20,7 @@ interface IProps {
   showSavedPokemon: (toggledState: boolean) => void;
 }
 
-class App extends React.Component <IProps> {
+class App extends React.Component <IProps, IAppState> {
   private containerNode: HTMLDivElement;
   private fetchingPokemon: boolean = false;
   private FETCH_LIMIT: number = 20;
@@ -28,7 +28,7 @@ class App extends React.Component <IProps> {
 
   public componentDidMount() {
     if (this.props.pokeList.length > 0) {
-      this.setState((prevState: IAppState) => {
+      this.setState((prevState) => {
         return {
           ...prevState,
           pokeList: [...this.props.pokeList],
@@ -41,7 +41,7 @@ class App extends React.Component <IProps> {
   }
 
   public componentWillReceiveProps(nextProps: IProps) {
-    this.setState((prevState: IAppState) => {
+    this.setState((prevState) => {
       this.fetchingPokemon = false;
       return {
         ...prevState,
