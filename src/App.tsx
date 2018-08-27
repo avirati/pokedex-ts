@@ -27,27 +27,10 @@ class App extends React.Component <IProps, IAppState> {
   private FETCH_OFFSET: number = 20;
 
   public componentDidMount() {
-    if (this.props.pokeList.length > 0) {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          pokeList: [...this.props.pokeList],
-        };
-      });
-    } else {
+    if (this.props.pokeList.length === 0) {
       console.log('Poke List Empty, Fetching from server');
       this.props.fetchPokemonList(this.FETCH_LIMIT, 0);
     }
-  }
-
-  public componentWillReceiveProps(nextProps: IProps) {
-    this.setState((prevState) => {
-      this.fetchingPokemon = false;
-      return {
-        ...prevState,
-        pokeList: [...nextProps.pokeList],
-      };
-    });
   }
 
   onContainerEndReached() {
