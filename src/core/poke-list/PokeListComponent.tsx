@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { IAppState, IPokemon } from '../duck/Interfaces';
+import { IPokemon } from '../duck/Interfaces';
 import PokeCardComponent from '../poke-card';
 
 interface IProps {
@@ -25,13 +24,4 @@ class PokeListComponent extends React.Component <IProps> {
   }
 }
 
-const mapStateToProps = (state: IAppState) => {
-  return {
-    favoriteToggleSwitch: state.favoriteToggleSwitch,
-    pokeList: state.pokeList,
-  };
-};
-
-export default connect (
-  mapStateToProps,
-)(PokeListComponent);
+export default PokeListComponent;

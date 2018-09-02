@@ -56,7 +56,7 @@ class App extends React.Component <IProps, IAppState> {
           <SavedPokemonSwitchComponent onSwitchToggled={onSavedSwitchToggled}/>
         </div>
         <ScrollHandler targetElement={this.containerNode} onEndReached={onContainerEndReached}>
-          <PokeListComponent/>
+          <PokeListComponent pokeList={this.props.pokeList}/>
         </ScrollHandler>
         <FooterComponent />
       </div>
